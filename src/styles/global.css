@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .bg-striped {
+    background: repeating-linear-gradient(to bottom,
+        #eee 0px,
+        #ccc 1px,
+        #eee 1px,
+        #fff 2px);
+  }
+}

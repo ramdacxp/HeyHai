@@ -1,21 +1,55 @@
 ---
 import Card from "../components/Card.astro";
+import ToggleSwitch from "../components/ToggleSwitch.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-  <h1 class="text-3xl">Test</h1>
-  <div x-data="{name: 'Test'}">
-    <div>
-      Name:
-      <span x-text="name">n/a</span>
+  <h1 class="text-3xl mb-4">Test</h1>
+  <div x-data="joke">
+    <div class="border border-dashed p-4 bg-blue-100">
+      <h2 class="text-xl" x-text="title">n/a</h2>
+      <p x-text="question" class="my-2">n/a</p>
+      <p x-text="answer" x-show="showAnswer" class="italic border-l-2 pl-2 py-2 my-2">n/a</p>
     </div>
-    <input type="text" x-model="name" class="border"/>
+    <div>
+      <h2 class="text-xl mt-4">Live Edit</h2>
+      <input
+        type="text"
+        x-model="title"
+        class="border w-full mt-2 p-2 rounded"
+      />
+      <textarea
+        x-model="question"
+        rows="3"
+        class="border w-full mt-2 min-h-20 p-2 rounded"></textarea>
+      <textarea
+        x-model="answer"
+        rows="3"
+        class="border w-full mt-2 min-h-20 p-2 rounded"></textarea>
+      <ToggleSwitch
+        label="Show the answer by default"
+        x-model="showAnswer"
+        class="mt-2"
+      />
+    </div>
   </div>
 </Layout>
 
 <script>
+  import Alpine from "alpinejs";
+
   document.addEventListener("alpine:init", () => {
     console.log("Alpine init done");
+    Alpine.data("joke", () => ({
+      title: "Anhalter",
+      question:
+        "What is the ultimate question of life, the universe, and everything?",
+      answer: "The answer is 42",
+      showAnswer: true,
+      toggle() {
+        this.showAnswer = !this.showAnswer;
+      },
+    }));
   });
 </script>

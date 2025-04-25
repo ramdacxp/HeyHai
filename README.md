@@ -18,3 +18,8 @@ Vote for the best joke
 
 * `npm create astro@latest`
 * `npx astro add tailwind`
+* `npx astro add alpinejs`
+* AlpineJS `persist` plugin:
+  * `npm install @alpinejs/persist`
+  * `npm install --save-dev @types/alpinejs__persist`
+  * create `src/alpine-entrypoint.ts` and adapt `astro.config.mjs`

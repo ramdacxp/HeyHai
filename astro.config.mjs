@@ -3,10 +3,16 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 
+import alpinejs from '@astrojs/alpinejs';
+
 // https://astro.build/config
 export default defineConfig({
-  outDir: "dist/www",
+  outDir: 'dist/www',
+
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
+
+  integrations: [alpinejs({ entrypoint: '/src/alpine-entrypoint' })],
+
 });

@@ -1,11 +1,29 @@
 @import "tailwindcss";
 
-@layer utilities {
-  .bg-striped {
-    background: repeating-linear-gradient(to bottom,
-        #eee 0px,
-        #ccc 1px,
-        #eee 1px,
-        #fff 2px);
-  }
+.bg-striped {
+  background: repeating-linear-gradient(to bottom,
+      #eee 0px,
+      #ccc 1px,
+      #eee 1px,
+      #fff 2px);
+}
+
+.btn {
+  @apply bg-blue-600 text-gray-200 px-8 py-2 rounded shadow-md;
+}
+
+.btn:hover {
+  @apply bg-blue-800 text-gray-100;
+}
+
+.btn.btn-neutral {
+  @apply bg-slate-300 text-slate-950;
+}
+
+.btn.btn-neutral:hover {
+  @apply bg-slate-400 text-white;
+}
+
+.btn:disabled {
+  @apply bg-slate-300 text-slate-400;
 }

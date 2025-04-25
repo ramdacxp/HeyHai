@@ -1,0 +1,21 @@
+---
+import Card from "../components/Card.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <h1 class="text-3xl">Test</h1>
+  <div x-data="{name: 'Test'}">
+    <div>
+      Name:
+      <span x-text="name">n/a</span>
+    </div>
+    <input type="text" x-model="name" class="border"/>
+  </div>
+</Layout>
+
+<script>
+  document.addEventListener("alpine:init", () => {
+    console.log("Alpine init done");
+  });
+</script>

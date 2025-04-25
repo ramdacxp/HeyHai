@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Hide cloaked elements until AlpineJS is loaded. Prevents "blips".
+   https://alpinejs.dev/directives/cloak */
+[x-cloak] {
+  display: none !important;
+}
+
+
 .bg-striped {
   background: repeating-linear-gradient(to bottom,
       #eee 0px,

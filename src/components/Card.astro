@@ -40,7 +40,7 @@ const {
     answer && (
       <div
         class="m-4 italic text-blue-900 text-lg cursor-pointer border-l-5 border-double pl-4 py-2"
-        style="display: none"
+        x-cloak
         x-show="showAnswer"
         x-on:click="showAnswer = false"
       >
@@ -56,7 +56,7 @@ const {
       <button class="btn" disabled>&laquo; Prev</button>
       <button class="btn">Next &raquo;</button>
     </div>
-    <div class="flex gap-2" x-show="showAnswer">
+    <div class="flex gap-2" x-cloak x-show="showAnswer">
       <button class="btn btn-neutral flex row gap-2">
         <!-- https://heroicons.com/ hand-thumb-up -->
         <svg
@@ -97,3 +97,13 @@ const {
     </div>
   </div>
 </div>
+
+<script>
+  function hello() {
+    console.log("Hello");
+  }
+
+  document.addEventListener("alpine:init", () => {
+    // Alpine.data(...)
+  });
+</script>

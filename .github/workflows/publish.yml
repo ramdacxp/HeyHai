@@ -31,28 +31,30 @@ jobs:
     - name: 🔨 Build Astro website
       run: npm run build
 
-    # - name: Validate composer.json and composer.lock
-    #   run: composer validate --strict
+    - name: 🔎 Validate composer.json and composer.lock
+      run: composer validate --strict
 
-    # - name: Cache Composer packages
-    #   id: composer-cache
-    #   uses: actions/cache@v3
-    #   with:
-    #     path: vendor
-    #     key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-    #     restore-keys: |
-    #       ${{ runner.os }}-php-
+    - name: 📦 Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
 
-    # - name: Install dependencies
-    #   run: composer install --prefer-dist --no-progress
+    - name: 📦 Install dependencies
+      run: composer install --prefer-dist --no-progress
 
-    - name: 📦 Upload Artifact
+    - name: 🚚 Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: Website
         include-hidden-files: true
         path: |
           dist
+          app
+          vendor
 
   deploy:
     name: 🌏 FTP Upload
@@ -62,7 +64,7 @@ jobs:
     needs: build
 
     steps:
-      - name: 📦 Download Artifact
+      - name: 🚚 Download Artifact
         uses: actions/download-artifact@v4
         with:
           name: Website

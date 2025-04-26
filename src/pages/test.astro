@@ -63,7 +63,7 @@ import Layout from "../layouts/Layout.astro";
 
 <script>
   import Alpine from "alpinejs";
-  import { TESTAPI_URL } from "../lib/constants";
+  import { API_URL } from "../lib/constants";
   import type { Joke, Jokes } from "../lib/models";
 
   document.addEventListener("alpine:init", () => {
@@ -78,8 +78,8 @@ import Layout from "../layouts/Layout.astro";
         this.showAnswer = !this.showAnswer;
       },
       init() {
-        console.log(`Loading data from ${TESTAPI_URL}`);
-        fetch(TESTAPI_URL)
+        console.log(`Loading data from ${API_URL}`);
+        fetch(API_URL)
           .then((response) =>
             response.json().then((json) => {
               this.jokes = json;

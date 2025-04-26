@@ -1,5 +1,5 @@
 ---
-
+import { ISPROD } from "../lib/constants";
 ---
 
 <footer
@@ -17,5 +17,6 @@
       class="hover:underline"
       target="_blank">Github</a
     >.
+    Uses {ISPROD ? "production" : "development"} server.
   </div>
 </footer>

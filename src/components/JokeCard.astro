@@ -83,8 +83,7 @@ const { class: clazz, ...attrs } = Astro.props;
 
 <script>
   import Alpine from "alpinejs";
-  import { TESTAPI_URL } from "../lib/constants";
-  import type { Joke, Jokes } from "../lib/models";
+  import { ISPROD, API_URL } from "../lib/constants";
 
   document.addEventListener("alpine:init", () => {
     Alpine.data("jokedata", () => ({
@@ -105,8 +104,9 @@ const { class: clazz, ...attrs } = Astro.props;
         return this.jokes[this.currentJoke];
       },
       init() {
-        console.log(`Loading data from ${TESTAPI_URL}`);
-        fetch(TESTAPI_URL)
+        console.log("Environment: " + (ISPROD ? "Prod" : "Dev"));
+        console.log(`Loading data from ${API_URL}`);
+        fetch(API_URL)
           .then((response) =>
             response.json().then((json) => {
               this.currentJoke = 0;

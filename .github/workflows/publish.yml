@@ -75,5 +75,5 @@ jobs:
           username: ${{ vars.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           uploads: |
-            ./dist/ => ./www/heyhai/dist/
+            ./ => ./www/heyhai/
           # delete: 'true'

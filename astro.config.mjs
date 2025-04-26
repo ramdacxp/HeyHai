@@ -7,8 +7,8 @@ import alpinejs from '@astrojs/alpinejs';
 
 // https://astro.build/config
 export default defineConfig({
-  outDir: 'dist/www',
-  site: 'https://schademarmelade.de',
+  // outDir: 'dist/www',
+  site: 'https://heyhai.schademarmelade.de',
   // base: 'root/',
 
   vite: {

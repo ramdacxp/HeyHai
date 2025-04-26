@@ -6,15 +6,20 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 
-require dirname(__DIR__, 2) . '/vendor/autoload.php';
+$rootDir = dirname(__DIR__, 2);
+require "$rootDir/vendor/autoload.php";
 
-// === Config & DB ===
-// $db = new Database("")
+// Configuration ---------------------------------------------------------------
+$prodConfigFile = "$rootDir/config/Production.php";
+$devConfigFile = "$rootDir/config/Development.php";
+$configFile = file_exists($prodConfigFile) ? $prodConfigFile : $devConfigFile;
+$config = include $configFile;
 
+// App & DB --------------------------------------------------------------------
 $app = AppFactory::create();
+$db = new Database($config["db.dsn"], $config["db.user"], $config["db.password"]);
 
-// === Middlewares ===
-
+// Middlewares -----------------------------------------------------------------
 // true adds the trailing slash (false removes it)
 $app->add(new Middlewares\TrailingSlash(trailingSlash: true));
 
@@ -23,7 +28,7 @@ $app->add((new Middlewares\JsonExceptionHandler())
   ->includeTrace(false)
   ->jsonOptions(JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
-// === Routes ===
+// Routes ----------------------------------------------------------------------
 
 $app->get('/api/', function (Request $request, Response $response, array $args) {
   return Helper::sendJson(
@@ -38,9 +43,9 @@ $app->get('/api/', function (Request $request, Response $response, array $args) 
   );
 });
 
-$app->get('/api/jokes/', function (Request $request, Response $response, array $args) {
-  $response->getBody()->write("Jokes");
-  return $response;
+$app->get('/api/jokes/', function (Request $request, Response $response, array $args) use ($db) {
+  $data = $db->getJokes();
+  return Helper::sendJson($response, $data);
 });
 
 $app->get('/api/vote/{direction}/{id}/', function (Request $request, Response $response, array $args) {
@@ -51,5 +56,5 @@ $app->get('/api/vote/{direction}/{id}/', function (Request $request, Response $r
   return $response;
 });
 
-// === Go for it ===
+// Go for it -------------------------------------------------------------------
 $app->run();

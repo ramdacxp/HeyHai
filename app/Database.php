@@ -39,7 +39,7 @@ class Database
     }
   }
 
-  public function getjokes(): array
+  public function getJokes(): array
   {
     $this->ensureConnection();
     $stmt = $this->pdo->query("SELECT * FROM jokes");

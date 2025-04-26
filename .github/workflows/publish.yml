@@ -55,6 +55,7 @@ jobs:
           dist
           app
           vendor
+          config
 
   deploy:
     name: 🌏 FTP Upload

@@ -39,4 +39,6 @@ Additional tooling:
 
 ## Links
 
-* Icons from https://freesvgicons.com/packs/lsicon
+* Icons from <https://freesvgicons.com/packs/lsicon>
+* [Astro](https://docs.astro.build/)
+* [AlpineJS](https://alpinejs.dev/start-here) with [Astro Sample](https://github.com/withastro/astro/tree/main/examples/framework-alpine)

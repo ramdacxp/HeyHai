@@ -1,0 +1,134 @@
+---
+import ThumbsUpIcon from "./../assets/thumb-up-outline.svg";
+import ThumbsDownIcon from "./../assets/thumb-down-outline.svg";
+
+interface Props {
+  class?: string;
+}
+const { class: clazz, ...attrs } = Astro.props;
+---
+
+<div
+  class:list={[
+    "card rounded border border-gray-200 bg-slate-50 shadow-lg",
+    clazz,
+  ]}
+  x-data="jokedata"
+  {...attrs}
+>
+  <!-- header -->
+  <h2
+    class="text-2xl font-light border-b border-gray-200 p-4"
+    x-text="joke.title"
+  >
+    ...
+  </h2>
+
+  <!-- question -->
+  <div
+    class="m-4 text-gray-800 text-lg cursor-pointer"
+    x-text="joke.question"
+    x-on:click="showAnswer=true"
+  >
+    ???
+  </div>
+
+  <!-- answer -->
+  <div
+    class="m-4 italic text-blue-900 text-lg cursor-pointer border-l-5 border-double pl-4 py-2"
+    x-cloak
+    x-show="showAnswer"
+    x-text="joke.answer"
+    x-on:click="showAnswer=false"
+  >
+    !!!
+  </div>
+
+  <!-- footer -->
+  <div
+    class="border-t border-slate-200 p-4 bg-slate-100 flex items-center justify-between"
+  >
+    <!-- footer left -->
+    <div class="flex gap-2">
+      <button
+        class="btn btn-neutral flex row items-center gap-2 px-2!"
+        x-bind:disabled="!enableVoting"
+        @click="vote(true)"
+      >
+        <ThumbsUpIcon class="size-5 fill-green-500" />
+        <span x-text="joke.upVotes">0</span>
+      </button>
+      <button
+        class="btn btn-neutral flex row items-center gap-2 px-2!"
+        x-bind:disabled="!enableVoting"
+        @click="vote(false)"
+      >
+        <ThumbsDownIcon class="size-5 fill-red-500" />
+        <span x-text="joke.downVotes">0</span>
+      </button>
+    </div>
+    <!-- footer right -->
+    <div class="flex gap-2">
+      <button class="btn" x-cloak x-show="!showAnswer" @click="showAnswer=true"
+        >Show Answer</button
+      >
+      <button class="btn" x-cloak x-show="showAnswer" disabled
+        >Show Answer</button
+      >
+      <button class="btn btn-neutral" @click="nextJoke">Random</button>
+      <button class="btn" @click="nextJoke">Next &raquo;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import Alpine from "alpinejs";
+  import { TESTAPI_URL } from "../lib/constants";
+  import type { Joke, Jokes } from "../lib/models";
+
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("jokedata", () => ({
+      jokes: [
+        {
+          title: "Loading...",
+          question: "Please wait while we are loading some jokes...",
+          answer: "The answer is 42.",
+          showAnswer: false,
+          upVotes: 0,
+          downVotes: 0,
+        },
+      ],
+      currentJoke: 0,
+      showAnswer: false,
+      enableVoting: true,
+      get joke() {
+        return this.jokes[this.currentJoke];
+      },
+      init() {
+        console.log(`Loading data from ${TESTAPI_URL}`);
+        fetch(TESTAPI_URL)
+          .then((response) =>
+            response.json().then((json) => {
+              this.currentJoke = 0;
+              this.jokes = json;
+              console.log(`Loaded ${this.jokes.length} joke(s)`);
+            }),
+          )
+          .catch((ex) => {
+            console.error(ex);
+            throw Error("Invalid API data!");
+          });
+      },
+      nextJoke() {
+        this.currentJoke =
+          this.currentJoke < this.jokes.length - 1 ? this.currentJoke + 1 : 0;
+        this.showAnswer = this.joke.showAnswer;
+        this.enableVoting = true;
+      },
+      vote(up: boolean) {
+        up ? this.joke.upVotes++ : this.joke.downVotes++;
+        this.enableVoting = false;
+      },
+    }));
+  });
+</script>

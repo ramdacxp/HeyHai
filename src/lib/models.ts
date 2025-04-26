@@ -4,5 +4,7 @@ export interface Joke {
 	title: string;
 	question: string;
 	answer: string;
-	showAnswer: boolean;
+  showAnswer: boolean;
+  upVotes: number;
+  downVotes: number;
 }

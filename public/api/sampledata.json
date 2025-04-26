@@ -3,12 +3,16 @@
     "title": "Bond, James Bond",
     "question": "Von welchem Raubtier würde sich James Bond das Frühstück servieren lassen, aber niemals seinen Martini?",
     "answer": "Vom Rührhai.",
-    "showAnswer": false
+    "showAnswer": false,
+    "upVotes": 0,
+    "downVotes": 0
   },
   {
     "title": "Anhalter",
-    "question": "What is the ultimate question of life, the universe, and everything?",
+    "question": "What is the answer to the ultimate question of life, the universe, and everything?",
     "answer": "The answer is 42.",
-    "showAnswer": false
+    "showAnswer": false,
+    "upVotes": 0,
+    "downVotes": 0
   }
 ]

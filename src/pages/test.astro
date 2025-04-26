@@ -7,7 +7,9 @@ import Layout from "../layouts/Layout.astro";
 <Layout>
   <h1 class="text-3xl mb-4">Online Editor</h1>
   <div x-data="joke">
-    <div class="border border-dashed p-4 bg-blue-100">
+    <!--PREVIEW -->
+    <h2 class="text-xl mt-4">Preview</h2>
+    <div class="border border-dashed mt-2 p-4 bg-blue-100">
       <h2 class="text-xl" x-text="title">n/a</h2>
       <p x-text="question" class="my-2">n/a</p>
       <p
@@ -18,6 +20,7 @@ import Layout from "../layouts/Layout.astro";
         n/a
       </p>
     </div>
+    <!--EDIT -->
     <div>
       <h2 class="text-xl mt-4">Live Edit</h2>
       <input
@@ -38,14 +41,30 @@ import Layout from "../layouts/Layout.astro";
         x-model="showAnswer"
         class="mt-2"
       />
+      <div class="mt-4">
+        <button disabled class="btn">Save</button>
+        <button disabled class="btn btn-neutral">Add</button>
+      </div>
     </div>
-    <button class="btn mt-4" @click="loadData">Load</button>
+    <!--LIST -->
+    <!-- <button class="btn mt-4" @click="loadData">Load</button> -->
+    <div>
+      <h2 class="text-xl mt-4">Available Jokes</h2>
+      <ul class="list-inside list-disc ml-2">
+        <template x-for="joke in jokes">
+          <li class="cursor-pointer" x-text="joke.title" @click="load(joke)">
+          </li>
+        </template>
+      </ul>
+    </div>
+    <!-- end of x-data -->
   </div>
 </Layout>
 
 <script>
   import Alpine from "alpinejs";
-  import { API_URL } from "../lib/constants";
+  import { TESTAPI_URL } from "../lib/constants";
+  import type { Joke, Jokes } from "../lib/models";
 
   document.addEventListener("alpine:init", () => {
     Alpine.data("joke", () => ({
@@ -54,18 +73,40 @@ import Layout from "../layouts/Layout.astro";
         "What is the ultimate question of life, the universe, and everything?",
       answer: "The answer is 42",
       showAnswer: true,
+      jokes: [],
       toggle() {
         this.showAnswer = !this.showAnswer;
       },
+      init() {
+        console.log(`Loading data from ${TESTAPI_URL}`);
+        fetch(TESTAPI_URL)
+          .then((response) =>
+            response.json().then((json) => {
+              this.jokes = json;
+              console.log(`Loaded ${this.jokes.length} joke(s)`);
+            }),
+          )
+          .catch((ex) => {
+            console.error(ex);
+            throw Error("Invalid API data!");
+          });
+      },
+      load(joke: Joke) {
+        this.title = joke.title;
+        this.question = joke.question;
+        this.answer = joke.answer;
+        this.showAnswer = joke.showAnswer;
+      },
     }));
-
-    console.log(`Loading data from ${API_URL}`);
   });
 </script>
 
-<script is:inline>
+<!-- <xxxscript is:inline>
+  import Alpine from "alpinejs";
+
   async function loadData() {
     let response = await fetch("/api/sampledata.json");
-    return await response.text();
+
+    return response.json();
   }
-</script>
+</scriptxxx> -->

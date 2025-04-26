@@ -1,5 +1,7 @@
 export const API_URL = `${import.meta.env.SITE}${import.meta.env.BASE_URL}api/`;
 
+export const TESTAPI_URL = `${import.meta.env.BASE_URL}api/sampledata.json`;
+
 // export const REMOTE_ASSETS_BASE_URL = `https://flowbite-admin-dashboard.vercel.app`;
 
 // use fake data

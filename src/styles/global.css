@@ -31,6 +31,6 @@
   @apply bg-slate-400 text-white;
 }
 
-.btn:disabled {
+.btn:disabled, .btn.btn-neutral:disabled {
   @apply bg-slate-300 text-slate-400;
 }
